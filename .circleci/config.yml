@@ -6,7 +6,7 @@ jobs:
       - checkout
       - run:
           command: |
-            apt-get install --no-install-recommends -y qemubuilder debootstrap
+            sudo apt-get install --no-install-recommends -y qemubuilder debootstrap
       # Reuse cached packages and build image
       - restore_cache:
           key: cache-0001
