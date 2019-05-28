@@ -4,16 +4,20 @@ jobs:
     machine: true
     steps:
       - checkout
+      - run:
+          command: |
+            apt-get install --no-install-recommends -y qemubuilder debootstrap
       # Reuse cached packages and build image
       - restore_cache:
           key: cache-0001
       - run:
           command: |
-            echo hi
+            sudo debootstrap --arch mipsel --foreign --include=apt --cache-dir=/var/cache/pbuilder/aptcache/ --keyring=/etc/apt/trusted.gpg --force-check-gpg sid /var/cache/pbuilder/build/25855a http://ftp.uk.debian.org/debian/
       - save_cache:
           key: cache-0001
           paths:
-            - ~/.cache
+            - ~/var/cache/pbuilder/aptcache/
+            - ~/var/cache/pbuilder/build
       - run:
           command: |
             echo hi
